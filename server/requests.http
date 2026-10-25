@@ -1,0 +1,56 @@
+### 1. Список фактов
+GET http://127.0.0.1:8000/api/facts
+Accept: application/json
+
+### 2. Список с фильтром по категории
+GET http://127.0.0.1:8000/api/facts?category_id=2
+Accept: application/json
+
+### 3. Существующий факт
+GET http://127.0.0.1:8000/api/facts/1
+Accept: application/json
+
+### 4. Несуществующий факт
+GET http://127.0.0.1:8000/api/facts/999
+Accept: application/json
+
+### 5. Создание — корректные данные
+POST http://127.0.0.1:8000/api/facts
+Accept: application/json
+Content-Type: application/json
+
+{"text": "Колибри — единственные птицы, которые умеют летать назад.", "category_id": 2}
+
+### 6. Создание — без обязательного поля text
+POST http://127.0.0.1:8000/api/facts
+Accept: application/json
+Content-Type: application/json
+
+{"category_id": 2}
+
+### 7. Создание — text короче 10 символов
+POST http://127.0.0.1:8000/api/facts
+Accept: application/json
+Content-Type: application/json
+
+{"text": "Коротко", "category_id": 2}
+
+### 8. Создание — категории не существует
+POST http://127.0.0.1:8000/api/facts
+Accept: application/json
+Content-Type: application/json
+
+{"text": "Некоторый очень интересный проверочный факт.", "category_id": 999}
+
+### 9. Создание — дубликат текста (бизнес-правило)
+POST http://127.0.0.1:8000/api/facts
+Accept: application/json
+Content-Type: application/json
+
+{"text": "Мёд не портится тысячелетиями: археологи находили съедобный мёд в гробницах возрастом более 3000 лет.", "category_id": 2}
+
+### 10. Тот же запрос без Accept — увидим HTML/302
+POST http://127.0.0.1:8000/api/facts
+Content-Type: application/json
+
+{"category_id": 2}
